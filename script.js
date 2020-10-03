@@ -2,7 +2,7 @@ $("document").ready(function () {
   var month = dayjs().month() + 1; // Time variables
   var day = dayjs().date();
   var year = dayjs().year();
-  var hour = dayjs().hour();
+  var hour = parseInt(dayjs().format('H'));
   var storage = { //data storage object
     9: "",
     10: "",
@@ -27,8 +27,15 @@ $("document").ready(function () {
   });
   $(".hour").each(function () { //figuring out how to make the time colors work
     var temp = $(this).attr("data-time");
-    //console.log("Page: " + dayjs().hour(temp));
-    //console.log("Now: " + hour);
+    if (parseInt(temp) < hour) {
+      $(this).parent().addClass("past");
+    }
+    if (parseInt(temp) === hour) {
+      $(this).parent().addClass("present");
+    }
+    if (parseInt(temp) < hour) {
+      $(this).parent().addClass("future");
+    }
   });
   //Data Handling
   $("button").on("click", function () { //when button is clicked, get content, and save it to temp storage, then send to local storage
