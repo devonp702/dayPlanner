@@ -14,12 +14,18 @@ $("document").ready(function () {
     16: "",
     17: ""
   };
-  var load = window.localStorage.getItem("save");
-  storage = JSON.parse(load);
-  console.log(storage);
+  var load = localStorage.getItem("storage");
+  if (load !== null) {
+    storage = JSON.parse(load);
+    $("textarea").each(function (index) {
+      $(this).val(storage[9 + index]);
+    });
+  }
   $("#currentDay").text("Current Day is: " + month + "/" + day + "/" + year);
   for (var i = 0; i < storage.length; i++) {
     console.log(storage[i]);
+    var replace = storage[i];
+    $(".textarea").index(i).val(replace);
   }
   $(".hour").each(function (index) {
     $(this).attr("data-time", 9 + index); // set attribute to time in military time
@@ -34,7 +40,6 @@ $("document").ready(function () {
     var str = $(this).prev().val();
     var idx = $(this).prev().prev().attr("data-time");
     storage[idx] = str;
-    var cookie = JSON.stringify(storage);
-    window.localStorage.setItem("save", cookie)
+    localStorage.setItem("storage", JSON.stringify(storage))
   });
 });
